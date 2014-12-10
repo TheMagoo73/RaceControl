@@ -1,0 +1,10 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Roles.IsUserInRole("AppAdmin"))
+{
+    <ul class="nav navbar-nav navbar-left">
+        <li>
+            @Html.ActionLink("+System Admin", "Index", "SystemAdmin", routeValues: null, htmlAttributes: new { title = "System Admin" })
+        </li>
+    </ul>
+}
+
