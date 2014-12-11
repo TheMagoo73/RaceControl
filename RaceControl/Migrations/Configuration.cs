@@ -42,7 +42,7 @@ namespace RaceControl.Migrations
                 }
             }
 
-            // Add default users and assign to roles
+            // Add default user, empty profile and assign to roles
             var userStore = new UserStore<ApplicationUser>(context);
             var userManager = new UserManager<ApplicationUser>(userStore);
 
@@ -53,6 +53,13 @@ namespace RaceControl.Migrations
                     var user = new ApplicationUser { UserName = du.Item1 };
                     userManager.Create(user, du.Item2);
                     userManager.AddToRole(user.Id, "AppAdmin");
+                    userManager.AddToRole(user.Id, "User");
+
+                    var profile = new ProfileModel();
+                    profile.user = user;
+                    var dbContext = DataDBContext.Create();
+                    dbContext.Profiles.Add(profile);
+                    dbContext.SaveChanges();
                 }
             }
         }
