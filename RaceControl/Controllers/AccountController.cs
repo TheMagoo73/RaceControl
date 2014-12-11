@@ -160,6 +160,12 @@ namespace RaceControl.Controllers
                 {
                     UserManager.AddToRole(user.Id, "User");
 
+                    var profile = new ProfileModel();
+                    profile.user = user;
+                    var dbContext = DataDBContext.Create();
+                    dbContext.Profiles.Add(profile);
+                    await dbContext.SaveChangesAsync();
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
